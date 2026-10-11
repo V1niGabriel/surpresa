@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia das Crianças, Dea!</title>
+    
+    <!-- Importando Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Importando fontes do Google Fonts: Dancing Script para o toque feminino e Poppins para leitura -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        barbie: {
+                            light: '#ff9ad2',
+                            DEFAULT: '#e0218a',
+                            dark: '#c81075',
+                            glow: '#ff69b4'
+                        }
+                    },
+                    fontFamily: {
+                        cursive: ['"Dancing Script"', 'cursive'],
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos globais e reset suave */
+        body {
+            background: linear-gradient(135deg, #ffe6f2 0%, #ffb3d9 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: #c81075;
+        }
+
+        /* Animação para o presente flutuante */
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .animate-float:hover {
+            filter: drop-shadow(0 0 20px #ff69b4);
+            transform: scale(1.1);
+        }
+
+        /* Animações de entrada para a Barbie e textos */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .pop-in {
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Efeito Polaroid para a imagem da Barbie */
+        .polaroid-frame {
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 15px 35px rgba(224, 33, 138, 0.2);
+            border-radius: 8px;
+            transform: rotate(-3deg);
+            transition: transform 0.4s ease;
+        }
+        
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* Transição suave entre telas */
+        .screen-transition {
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        /* Oculta elementos completamente do fluxo da página */
+        .hidden-flow {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center relative">
+
+    <!-- Áudio que tocará de fundo (referenciando a pasta assets) -->
+    <audio id="bgMusic" src="assets/soundtrack.mp3"></audio>
+
+    <!-- TELA 1: O Presente -->
+    <div id="giftScreen" class="screen-transition absolute inset-0 flex flex-col items-center justify-center z-10">
+        <div class="text-center p-6">
+            <h1 class="font-cursive text-5xl md:text-6xl text-barbie-dark mb-12 drop-shadow-sm">
+                Uma surpresa especial...
+            </h1>
+            
+            <!-- Botão/Ícone do presente -->
+            <div id="giftBox" class="animate-float inline-block relative group" onclick="openGift()">
+                <div class="text-9xl filter drop-shadow-xl">
+                    🎁
+                </div>
+                <!-- Efeito de brilho atrás do presente -->
+                <div class="absolute inset-0 bg-barbie-glow rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity -z-10"></div>
+            </div>
+            
+            <p class="mt-12 text-2xl font-cursive text-barbie animate-pulse">
+                Clique no seu presente!
+            </p>
+        </div>
+    </div>
+
+    <!-- TELA 2: A Surpresa (Barbie e Mensagens) -->
+    <div id="barbieScreen" class="screen-transition hidden-flow opacity-0 flex-col items-center justify-center min-h-screen w-full px-4 py-10 z-20">
+        
+        <!-- Mensagem de Feliz Dia das Crianças -->
+        <h1 class="font-cursive text-6xl md:text-8xl text-barbie-DEFAULT text-center drop-shadow-md mb-8 pop-in" style="animation-delay: 0.2s;">
+            Feliz Dia das Crianças,<br>DEA!
+        </h1>
+
+        <!-- Imagem da Barbie com efeito polaroid -->
+        <div class="polaroid-frame max-w-sm w-full pop-in" style="animation-delay: 0.8s;">
+            <!-- Usa a imagem local. Se não encontrar, mostra um placeholder rosa e feminino -->
+            <img 
+                src="assets/barbie.jpg" 
+                onerror="this.onerror=null;this.src='https://placehold.co/400x500/e0218a/ffffff?text=Sua+Linda+Barbie+Aqui&font=Montserrat';" 
+                alt="Boneca Barbie" 
+                class="w-full h-auto rounded object-cover shadow-inner"
+            >
+            <div class="text-center mt-4 font-cursive text-2xl text-barbie-light">
+                Para a menina mais linda!
+            </div>
+        </div>
+
+        <!-- Mensagem Final Romântica (Aparecerá depois de 4 segundos) -->
+        <div id="finalMessage" class="mt-12 px-6 max-w-2xl text-center hidden-flow">
+            <p class="font-cursive text-4xl md:text-5xl text-barbie-dark leading-relaxed drop-shadow-sm fade-in-up">
+                "Dea, você é a verdadeira Barbie, então como eu posso dar você para você mesma?" ✨💖
+            </p>
+        </div>
+    </div>
+
+    <!-- Efeitos decorativos de fundo (bolhas/brilhos) -->
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+        <div class="absolute top-10 left-10 text-barbie-light opacity-30 text-4xl animate-bounce">✨</div>
+        <div class="absolute bottom-20 right-20 text-barbie-light opacity-40 text-5xl animate-bounce" style="animation-delay: 1s;">🌸</div>
+        <div class="absolute top-40 right-10 text-barbie-light opacity-20 text-3xl animate-pulse">💖</div>
+        <div class="absolute bottom-10 left-20 text-barbie-light opacity-30 text-4xl animate-pulse" style="animation-delay: 0.5s;">✨</div>
+    </div>
+
+    <!-- Lógica de interação com JavaScript -->
+    <script>
+        function openGift() {
+            const giftScreen = document.getElementById('giftScreen');
+            const barbieScreen = document.getElementById('barbieScreen');
+            const finalMessage = document.getElementById('finalMessage');
+            const bgMusic = document.getElementById('bgMusic');
+
+            // Tenta tocar a música (Tratamento de erro caso o arquivo ainda não exista localmente)
+            bgMusic.volume = 0.5; // Deixa o som agradável
+            bgMusic.play().catch(error => {
+                console.log("Aviso: Música não pôde ser reproduzida. Verifique se 'assets/musica.mp3' existe.", error);
+            });
+
+            // 1. Desaparecer com a tela do presente
+            giftScreen.style.opacity = '0';
+            
+            // 2. Aguarda o fade out do presente e mostra a tela da Barbie
+            setTimeout(() => {
+                giftScreen.classList.add('hidden-flow'); // Remove do fluxo
+                
+                barbieScreen.classList.remove('hidden-flow');
+                barbieScreen.classList.add('flex');
+                
+                // Força um pequeno delay (reflow) para a transição de opacidade funcionar
+                setTimeout(() => {
+                    barbieScreen.style.opacity = '1';
+                }, 50);
+
+                // 3. Aguarda 4 segundos (4000 ms) para mostrar a mensagem romântica final
+                setTimeout(() => {
+                    finalMessage.classList.remove('hidden-flow');
+                    // A classe fade-in-up (definida no CSS) cuidará da animação suave
+                }, 4000);
+
+            }, 800); // Tempo da transição de opacidade do presente
+        }
+    </script>
+</body>
+</html>
